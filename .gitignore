@@ -1,0 +1,5 @@
+fiftyone/
+mlruns/
+preprocess/data
+train/data
+__pycache__/

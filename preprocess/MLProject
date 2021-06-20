@@ -1,0 +1,16 @@
+name: human-segmentation
+
+docker_env:
+  image: yosshi999/virtual-background:0.0.1
+  volumes: [
+    "$(pwd)/../mlruns:/tmp/mlruns",
+    "$(pwd)/data:/opt/data",
+    "$(pwd)/../config:/mlflow/projects/code/config",
+    "$(pwd)/../fiftyone:/root/fiftyone"
+  ]
+
+entry_points:
+  preprocess:
+    parameters:
+      downstream: {type: string, default: /opt/data/preprocess}
+    command: python -m src.preprocess --downstream {downstream}

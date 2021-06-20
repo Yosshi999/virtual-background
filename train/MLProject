@@ -1,0 +1,20 @@
+name: human-segmentation
+
+docker_env:
+  image: yosshi999/virtual-background:0.0.1
+  volumes: [
+    "$(pwd)/../mlruns:/tmp/mlruns",
+    "$(pwd)/data:/opt/data",
+    "$(pwd)/../config:/mlflow/projects/code/config",
+    "$(pwd)/../fiftyone:/root/fiftyone"
+  ]
+
+entry_points:
+  train:
+    parameters:
+      upstream: {type: string, default: ""}
+      downstream: {type: string, default: /opt/data/model}
+    command: |
+      python -m src.train \
+        --upstream {upstream} \
+        --downstream {downstream}

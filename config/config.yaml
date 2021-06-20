@@ -1,0 +1,14 @@
+# dataset:
+#  zoo_name: coco-2014-segmentation
+#  name: coco-person
+#  label_types:
+#    - segmentation
+#  classes:
+#    - person
+dataset:
+ zoo_name: open-images-v6
+ name: open-images-person
+ label_types:
+   - segmentations
+ classes:
+   - Person
