@@ -12,5 +12,6 @@ docker_env:
 entry_points:
   preprocess:
     parameters:
+      config: {type: string, default: /mlflow/projects/code/config/preprocess/coco2014.yaml}
       downstream: {type: string, default: /opt/data/preprocess}
-    command: python -m src.preprocess --downstream {downstream}
+    command: python -m src.preprocess --config {config} --downstream {downstream}

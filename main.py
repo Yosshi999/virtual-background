@@ -5,6 +5,7 @@ import mlflow
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--preprocess_config", type=str, default="./config/preprocess/coco2014.yaml")
     parser.add_argument("--preprocess_cached_data_id", type=str, default="")
     args = parser.parse_args()
 
@@ -27,6 +28,7 @@ def main():
                 entry_point="preprocess",
                 backend="local",
                 parameters={
+                    "config": args.preprocess_config,
                     "downstream": preprocess_downstream,
                 }
             )
@@ -36,15 +38,15 @@ def main():
                 preprocess_run.run_id,
                 "artifacts/downstream"
             )
-        train_run = mlflow.run(
-            uri="./train",
-            entry_point="train",
-            backend="local",
-            parameters={
-                "upstream": train_upstream,
-                "downstream": train_downstream
-            }
-        )
+        # train_run = mlflow.run(
+        #     uri="./train",
+        #     entry_point="train",
+        #     backend="local",
+        #     parameters={
+        #         "upstream": train_upstream,
+        #         "downstream": train_downstream
+        #     }
+        # )
 
 if __name__ == '__main__':
     main()

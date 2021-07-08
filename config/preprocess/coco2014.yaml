@@ -1,0 +1,7 @@
+dataset:
+ zoo_name: coco-2014
+ name: person-segm
+ label_types:
+   - segmentations
+ classes:
+   - person

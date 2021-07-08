@@ -8,11 +8,11 @@ ADD requirements.txt ${PROJECT_DIR}/
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
-    apt -y install software-properties-common wget curl build-essential && \
+    apt -y install software-properties-common wget curl build-essential libblas-dev liblapack-dev libhdf5-dev && \
     add-apt-repository -y ppa:deadsnakes/ppa
 
 RUN apt update && \
-    apt -y install python3.9 python3.9-distutils && \
+    apt -y install python3.9 python3.9-dev python3.9-distutils && \
     wget https://bootstrap.pypa.io/get-pip.py && \
     python3.9 get-pip.py && \
     ln -s /usr/bin/python3.9 /usr/bin/python && \

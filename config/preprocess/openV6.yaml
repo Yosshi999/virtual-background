@@ -1,0 +1,7 @@
+dataset:
+ zoo_name: open-images-v6
+ name: person-segm
+ label_types:
+   - segmentations
+ classes:
+   - Person
