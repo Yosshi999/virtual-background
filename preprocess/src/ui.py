@@ -17,8 +17,7 @@ def main():
 
     import fiftyone as fo
     dataset = fo.load_dataset(
-        'person-segm-train',
-        max_samples=100
+        'person-segm-train'
     )
     print(dataset.info['licenses'])
     session = fo.launch_app(dataset)

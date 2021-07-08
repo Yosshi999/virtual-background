@@ -22,12 +22,13 @@ run:
 .PHONY: vis_data
 vis_data:
 	docker run --rm \
-		$(IMAGE_NAME):$(VERSION) \
 		-v $(MAKEFILE_DIR)/mlruns:/tmp/mlruns \
 		-v $(MAKEFILE_DIR)/data:/opt/data \
 		-v $(MAKEFILE_DIR)/fiftyone:/root/fiftyone \
 		-v $(MAKEFILE_DIR)/preprocess/src:/mlflow/projects/code/src:ro \
-		python -m src.ui $(PREPROCESS_UPSTREAM)
+		-p 5151:5151 \
+		$(IMAGE_NAME):$(VERSION) \
+		python -m src.ui --upstream /tmp/mlruns/0/$(PREPROCESS_UPSTREAM)/artifacts/downstream
 
 .PHONY: vis_data_local
 vis_data_local:
