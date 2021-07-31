@@ -12,9 +12,11 @@ docker_env:
 entry_points:
   train:
     parameters:
+      config: {type: string, default: /mlflow/projects/code/config/train/resnet18.yaml}
       upstream: {type: string, default: ""}
       downstream: {type: string, default: /opt/data/model}
     command: |
       python -m src.train \
+        --config {config} \
         --upstream {upstream} \
         --downstream {downstream}

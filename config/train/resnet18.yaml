@@ -1,0 +1,15 @@
+device: cuda
+model:
+  arch: Unet
+  encoder_name: resnet18
+  encoder_weights: imagenet
+  in_channels: 3
+  classes: 1
+train:
+  epoch: 1
+  # train_step: 100
+  # val_every_n_step: 50
+  save_step: 1000
+
+#train: 45174 samples
+#val: 21634 samples

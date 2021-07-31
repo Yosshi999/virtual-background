@@ -7,6 +7,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--preprocess_config", type=str, default="./config/preprocess/coco2014.yaml")
     parser.add_argument("--preprocess_cached_data_id", type=str, default="")
+    parser.add_argument("--train_config", type=str, default="./config/train/resnet18.yaml")
     args = parser.parse_args()
 
     mlflow_exp_id = int(os.getenv("MLFLOW_EXPERIMENT_ID", 0))
@@ -38,15 +39,19 @@ def main():
                 preprocess_run.run_id,
                 "artifacts/downstream"
             )
-        # train_run = mlflow.run(
-        #     uri="./train",
-        #     entry_point="train",
-        #     backend="local",
-        #     parameters={
-        #         "upstream": train_upstream,
-        #         "downstream": train_downstream
-        #     }
-        # )
+        train_run = mlflow.run(
+            uri="./train",
+            entry_point="train",
+            backend="local",
+            docker_args={
+                "gpus": "all"
+            },
+            parameters={
+                "config": args.train_config,
+                "upstream": train_upstream,
+                "downstream": train_downstream
+            }
+        )
 
 if __name__ == '__main__':
     main()
