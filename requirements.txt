@@ -9,6 +9,7 @@ numpy
 omegaconf
 opencv-python-headless
 Pillow
+pycocotools
 pytorch-lightning
 requests
 scikit-learn
