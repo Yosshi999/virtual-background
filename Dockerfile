@@ -16,7 +16,8 @@ RUN apt update && \
     python3.9 get-pip.py && \
     ln -s /usr/bin/python3.9 /usr/bin/python
 
+ADD constraints.txt ${PROJECT_DIR}/
 ADD requirements.txt ${PROJECT_DIR}/
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt -c constraints.txt
 
 WORKDIR ${CODE_DIR}
