@@ -38,8 +38,8 @@ class MyModule(LightningModule):
             self.cfg.dataset.name + "-val",
         )
         self.model = smp.create_model(**self.cfg.model)
-        self.ds_train = Dataset(dataset_train.take(1000))
-        self.ds_val = Dataset(dataset_val.take(500), False)
+        self.ds_train = Dataset(dataset_train)
+        self.ds_val = Dataset(dataset_val, False)
         self.loss_fn = nn.BCEWithLogitsLoss()
         mlflow.log_param("train_size", len(dataset_train))
         mlflow.log_param("val_size", len(dataset_val))
@@ -90,7 +90,19 @@ class MyModule(LightningModule):
         return loss
     
     def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=1e-3)
+        optimizer = torch.optim.AdamW(self.parameters(), weight_decay=self.cfg.optim.weight_decay)
+        return {
+            "optimizer": optimizer,
+            "lr_scheduler": {
+                "scheduler": torch.optim.lr_scheduler.OneCycleLR(
+                    optimizer, self.cfg.optim.lr_max,
+                    epochs=self.trainer.max_epochs,
+                    steps_per_epoch=len(self.train_dataloader())),
+                "interval": "step",
+            },
+        }
+    # def configure_optimizers(self):
+    #     return torch.optim.Adam(self.parameters(), lr=1e-3)
 
 class PredictImageCallback(Callback):
     def __init__(self, model: LightningModule):

@@ -6,10 +6,13 @@ model:
   in_channels: 3
   classes: 1
 train:
-  epoch: 1
+  epoch: 5
   # train_step: 100
   # val_every_n_step: 50
   save_step: 1000
+  optim:
+    weight_decay: 0.001
+    lr_max: 2e-3
 
 #train: 45174 samples
 #val: 21634 samples
